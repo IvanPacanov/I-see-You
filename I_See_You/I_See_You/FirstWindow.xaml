@@ -1,0 +1,119 @@
+﻿<Window x:Class="I_See_You.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:I_See_You"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="FirstWindow" Height="350" Width="400" WindowStyle="None" Background="#FF2D2D30"
+         ResizeMode="NoResize" WindowStartupLocation="CenterScreen" MouseLeftButtonDown="WindowMouseLeftButtonDown">
+
+    <Window.Resources>
+        <Style x:Key="ComboBoxTest2" TargetType="{x:Type ComboBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton Grid.Column="2" Focusable="false" IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" >
+                                <ToggleButton.Template>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="5*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Border x:Name="Border"  Grid.ColumnSpan="2" CornerRadius="5" Background="#FF7AC1FF" BorderBrush="Black" BorderThickness="1" />
+                                            <Border Grid.Column="0" CornerRadius="5,0,0,5"  Margin="1"  Background="#FF333337"  BorderBrush="Black" BorderThickness="0,0,1,0" />
+                                            <Path x:Name="Arrow" Grid.Column="1"  Fill="Orange" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 8 0 Z"/>
+                                        </Grid>
+                                       
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Margin="3"  />
+                            <TextBox x:Name="PART_EditableTextBox" Visibility="Hidden" IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                            <Popup Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True"  Focusable="False" PopupAnimation="Slide">
+                                <Grid  Name="DropDown" SnapsToDevicePixels="True" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border x:Name="DropDownBorder" Background="#FF252526" />
+                                    <ScrollViewer SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+
+    <x:Code>
+        private void WindowMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
+    </x:Code>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="120*"/>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="60*"/>
+          
+        </Grid.RowDefinitions>
+
+
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Width="40" Height="40" Background="Transparent" BorderBrush="Transparent"  VerticalAlignment="Top" Command="{Binding CloseButtonCommand}">
+                    <materialDesign:PackIcon Kind="Power" Foreground="#FFCCCCCD"></materialDesign:PackIcon>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="49*"/>
+                <RowDefinition Height="83*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <TextBlock Height="auto" Width="auto" VerticalAlignment="Center" HorizontalAlignment="Center" Text="I See You" Foreground="#FF7AC1FF" FontWeight="Bold" FontFamily="Dutch801 XBd BT" FontSize="16" FontStyle="Italic"/>
+
+            </Grid>
+            <Grid Grid.Row="1">
+                <TextBlock Height="54" Width="300" 
+                           VerticalAlignment="Center" HorizontalAlignment="Center" 
+                           Text="The application aims to process the photos and the image from the webcam. In the first step, select the camera that will be used. " Foreground="#FF7AC1FF" FontWeight="Bold" FontFamily="Book Antiqua" 
+                          TextWrapping="Wrap" TextAlignment="Center"/>
+
+            </Grid>
+
+        </Grid>
+
+
+        <Grid Grid.Row="2">
+            <ComboBox Width="210" Height="24"  
+                      ItemsSource="{Binding VideoDevices}"
+                      SelectedItem="{Binding CurrentDevice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                      VerticalAlignment="Top" Margin="95,12,95,3" BorderBrush="#FF333337"
+                    Style="{StaticResource ComboBoxTest2}" 
+                      Foreground="#FFF1F1F1">
+               
+            </ComboBox>
+        </Grid>
+        <Grid Grid.Row="3">
+            <Button Width="70" Height="40" 
+                    VerticalAlignment="Top" Background="Transparent" 
+                    BorderBrush="Transparent" Content="Start" 
+                    FontSize="15" Command="{Binding OpenSecondWindowButtonCommand}" Foreground="#FFF1F1F1">
+
+            </Button>
+        </Grid>
+
+    </Grid>
+</Window>
