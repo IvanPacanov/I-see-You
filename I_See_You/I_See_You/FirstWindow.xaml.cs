@@ -26,8 +26,10 @@ namespace I_See_You
             InitializeComponent();
             StartWindow startWindow = new StartWindow();
             this.DataContext = startWindow;
-            if (startWindow.CloseAction == null)
-                startWindow.CloseAction = new Action(this.Close);
+            if (startWindow.HidenWindow == null)
+                startWindow.HidenWindow = new Action(this.Close);
+
+          
         }
     }
 }

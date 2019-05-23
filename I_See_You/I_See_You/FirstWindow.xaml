@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:I_See_You"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="FirstWindow" Height="350" Width="400" WindowStyle="None" Background="#FF2D2D30"
-         ResizeMode="NoResize" WindowStartupLocation="CenterScreen" MouseLeftButtonDown="WindowMouseLeftButtonDown">
+        Title="FirstWindow" Height="350" Width="400" WindowStyle="None"
+       Background="#FF2D2D30"   ResizeMode="NoResize" WindowStartupLocation="CenterScreen" MouseLeftButtonDown="WindowMouseLeftButtonDown">
 
     <Window.Resources>
         <Style x:Key="ComboBoxTest2" TargetType="{x:Type ComboBox}">
@@ -110,7 +110,8 @@
             <Button Width="70" Height="40" 
                     VerticalAlignment="Top" Background="Transparent" 
                     BorderBrush="Transparent" Content="Start" 
-                    FontSize="15" Command="{Binding OpenSecondWindowButtonCommand}" Foreground="#FFF1F1F1">
+                    FontSize="15" 
+                    Command="{Binding OpenSecondWindowButtonCommand}" Foreground="#FFF1F1F1">
 
             </Button>
         </Grid>

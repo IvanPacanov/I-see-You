@@ -12,58 +12,33 @@ namespace I_See_You.MVVM
 {
     class StartWindow : WindowAbstractClass
     {
-               public ICommand CloseButtonCommand { get; private set; }
-        protected DsDevice[] SystemCamereas;
+        public ICommand CloseButtonCommand { get; private set; }
+        public ICommand OpenSecondWindowButtonCommand { get; private set; }
 
-        private KeyValuePair<int, string> _currentDevice;
-        public KeyValuePair<int, string> CurrentDevice
-        {
-            get { return _currentDevice; }
-            set
-            {
-                _currentDevice = value;
-                this.NotifyPropertyChanged("CurrentDevice");
-            }
-        }
+        SecondWindow secondWindow = new SecondWindow();
 
-        private ObservableCollection<KeyValuePair<int, string>> videoDevices;
-        public ObservableCollection<KeyValuePair<int, string>> VideoDevices
-        {
-            get { return videoDevices; }
-            set
-            {
-                videoDevices = value;
-                this.NotifyPropertyChanged("VideoDevices");
-            }
-        }
+        public override Action HidenWindow { get; set; }
 
         public StartWindow()
         {
+
             SystemCamereas = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
             VideoDevices = new ObservableCollection<KeyValuePair<int, string>>();
             GetVideoDevices();
             CloseButtonCommand = new DelegateCommand(CloseApp);
-            
-        }
-        private void GetVideoDevices()
-        {
-            int _DeviceIndex = 0;
-            foreach (DirectShowLib.DsDevice _Camera in SystemCamereas)
-            {
-                //  ListCamerasData.Add(new KeyValuePair<int, string>(_DeviceIndex, _Camera.Name));
-                _DeviceIndex++;
-                videoDevices.Add(new KeyValuePair<int, string>(_DeviceIndex, _Camera.Name));
-            }
+            OpenSecondWindowButtonCommand = new DelegateCommand(NextWindow);
 
-            if (videoDevices.Any())
-            {
-                CurrentDevice = videoDevices[0];
-            }
-            else
-            {
-                System.Windows.MessageBox.Show("No webcam found");
-            }
+
         }
+        public  void NextWindow()
+        {
+            secondWindow.Show();
+            HidenWindow();
+
+        }
+      
+
+      
 
     }
 }
